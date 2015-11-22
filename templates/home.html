@@ -1,0 +1,28 @@
+{% load admin_static %}<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Terrarium</title>
+		<link rel="stylesheet" type="text/css" href="{% static "admin/css/base.css" %}" />
+		<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}" />
+		<meta name="robots" content="NONE,NOARCHIVE" />
+	</head>
+	<body class="login">
+		<div id="container">
+			<div id="header">
+				<div id="branding">
+					<h1 id="site-name">Terrarium</h1>
+				</div>
+			</div>
+			<div id="content">
+				<div id="content-main">
+					<a href="/stats/">Stats</a><br />
+					<small>Stats and graphs for terrarium data.</small><br />
+					<a href="/api/">API</a><br />
+					<small>API.</small><br />
+				</div>
+				<br class="clear" />
+			</div>
+			<div id="footer"></div>
+		</div>
+		</body>
+</html>

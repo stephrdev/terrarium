@@ -1,0 +1,9 @@
+/web
+/log
+/htmlcov
+/terrarium/settings.py
+.cache
+.project
+.pydevproject
+*.pyc
+~*

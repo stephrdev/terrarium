@@ -1,0 +1,8 @@
+[run]
+branch = True
+omit =
+    terrarium/urls.py
+    terrarium/wsgi.py
+    */__init__.py
+    *settings.py
+    *migrations*
