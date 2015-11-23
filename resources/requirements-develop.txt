@@ -1,5 +1,6 @@
 -r requirements.txt
 
+psycopg2==2.6.1
 factory-boy==2.6.0
 pytest==2.8.3
 pytest-cov==2.2.0
