@@ -9,6 +9,8 @@ ALLOWED_HOSTS = [os.environ.get('HOSTNAME', 'localhost')]
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '*' * 10)
 
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE = bool(int(os.environ.get('COOKIE_SECURE', '1')))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -27,22 +29,32 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL = os.environ.get('EMAIL_SENDER', '{0}@{1}'.for
 
 ADMINS = [('admin', DEFAULT_FROM_EMAIL)]
 
-LOGGING['handlers'].update({
-    'file': {
-        'level': 'DEBUG',
-        'class': 'logging.FileHandler',
-        'filename': os.path.normpath(os.path.join(VHOST_DIR, 'log', 'django.log')),
-        'formatter': 'simple',
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.normpath(os.path.join(VHOST_DIR, 'log', 'django.log')),
+            'formatter': 'verbose',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        }
     },
-    'mail_admins': {
-        'level': 'ERROR',
-        'class': 'django.utils.log.AdminEmailHandler',
-        'include_html': True,
+    'formatters': {
+        'verbose': {
+            'format':
+                '[%(asctime)s] %(levelname)s:%(name)s %(funcName)s %(message)s',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['file', 'mail_admins'],
+        },
     }
-})
-LOGGING['loggers'] = {
-    '': {
-        'level': 'WARNING',
-        'handlers': ['file', 'mail_admins'],
-    },
 }
