@@ -2,6 +2,7 @@ import os
 
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
+PROJECT_NAME = os.path.basename(PROJECT_DIR)
 ROOT_DIR = os.path.dirname(PROJECT_DIR)
 
 SECRET_KEY = 'terrarium'
@@ -10,7 +11,7 @@ DEBUG = False
 
 DEFAULT_FROM_EMAIL = 'root@localhost'
 SERVER_EMAIL = 'root@localhost'
-EMAIL_SUBJECT_PREFIX = os.path.basename(PROJECT_DIR)
+EMAIL_SUBJECT_PREFIX = '[{0}] '.format(PROJECT_NAME)
 
 
 DATABASES = {
