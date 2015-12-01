@@ -28,33 +28,3 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL = os.environ.get('EMAIL_SENDER', '{0}@{1}'.for
     PROJECT_NAME, os.environ.get('HOSTNAME', 'localhost')))
 
 ADMINS = [('admin', DEFAULT_FROM_EMAIL)]
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.normpath(os.path.join(VHOST_DIR, 'log', 'django.log')),
-            'formatter': 'verbose',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        }
-    },
-    'formatters': {
-        'verbose': {
-            'format':
-                '[%(asctime)s] %(levelname)s:%(name)s %(funcName)s %(message)s',
-        },
-    },
-    'loggers': {
-        '': {
-            'level': 'WARNING',
-            'handlers': ['file', 'mail_admins'],
-        },
-    }
-}

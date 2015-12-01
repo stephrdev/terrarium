@@ -91,3 +91,22 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+        },
+        'django': {
+            'handlers': ['console'],
+        },
+    }
+}
