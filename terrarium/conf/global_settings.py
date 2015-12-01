@@ -94,19 +94,15 @@ REST_FRAMEWORK = {
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'handlers': {
         'console': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
         },
     },
-    'loggers': {
-        '': {
-            'handlers': ['console'],
-        },
-        'django': {
-            'handlers': ['console'],
-        },
-    }
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
 }
