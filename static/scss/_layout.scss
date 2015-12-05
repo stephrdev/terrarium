@@ -1,0 +1,23 @@
+.header {
+	clear: both;
+
+	.pure-menu {
+		background: #2D3E50;
+
+		ul {
+			float: right;
+		}
+
+		span {
+			color: #FFFFFF;
+		}
+
+		a {
+			color: #FFFFFF;
+
+			&:hover {
+				background: lighten(#2D3E50, 20%);
+			}
+		}
+	}
+}
