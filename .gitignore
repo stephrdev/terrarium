@@ -7,3 +7,4 @@
 .pydevproject
 *.pyc
 ~*
+Gemfile.lock

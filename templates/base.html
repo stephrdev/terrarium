@@ -1,0 +1,25 @@
+{% load pipeline %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}Terrarium{% endblock %}</title>
+		<meta name="robots" content="NONE,NOARCHIVE" />
+		{% stylesheet 'styles' %}
+	</head>
+	<body>
+		<div class="header">
+			<div class="pure-menu pure-menu-horizontal">
+				<ul class="pure-menu-list">
+					<li class="pure-menu-item"><a href="{% url 'home' %}" class="pure-menu-link">Overview</a></li>
+					<li class="pure-menu-item"><a href="{% url 'admin:index' %}" class="pure-menu-link">Admin</a></li>
+				</ul>
+				<span class="pure-menu-heading">Terrarium</span>
+			</div>
+		</div>
+		{% block content %}
+		{% endblock %}
+		{% javascript 'scripts' %}
+	</body>
+</html>

@@ -23,5 +23,10 @@ coverage-html:
 
 
 devinstall:
+	gem install bundler
+	bundler install --force
 	pip install -e .
 	pip install -r resources/requirements-develop.txt
+
+compass:
+	compass watch -c resources/compass_config.rb resources/

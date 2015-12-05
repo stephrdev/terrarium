@@ -36,8 +36,36 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'web', 'media')
 MEDIA_URL = '/media/'
 
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+STATICFILES_DIRS = [os.path.join(ROOT_DIR, 'static')]
 STATIC_ROOT = os.path.join(ROOT_DIR, 'web', 'static')
 STATIC_URL = '/static/'
+
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.jsmin.JSMinCompressor'
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.NoopCompressor'
+
+PIPELINE_CSS = {
+    'styles': {
+        'source_filenames': (
+            'css/styles.css',
+            'css/vendor/metricsgraphics/metricsgraphics-2.7.0.css',
+        ),
+        'output_filename': 'css/build.css',
+    },
+}
+
+PIPELINE_JS = {
+    'scripts': {
+        'source_filenames': (
+            'js/vendor/jquery/jquery-2.1.4.js',
+            'js/vendor/d3/d3-3.5.10.js',
+            'js/vendor/metricsgraphics/metricsgraphics-2.7.0.js',
+            'js/graph.js',
+            'js/app.js',
+        ),
+        'output_filename': 'js/build.js',
+    }
+}
 
 TEMPLATES = [
     {
@@ -69,6 +97,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
 
+    'pipeline',
     'rest_framework',
     'rest_framework.authtoken',
     'didadata',

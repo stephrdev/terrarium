@@ -1,2 +1,4 @@
 Django==1.8.6
+django-pipeline==1.5.4
+jsmin==2.1.6
 -e git+https://github.com/stephrdev/django-didadata.git#egg=django-didadata
