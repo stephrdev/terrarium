@@ -28,3 +28,5 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL = os.environ.get('EMAIL_SENDER', '{0}@{1}'.for
     PROJECT_NAME, os.environ.get('HOSTNAME', 'localhost')))
 
 ADMINS = [('admin', DEFAULT_FROM_EMAIL)]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
