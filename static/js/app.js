@@ -18,6 +18,6 @@ $(document).ready(function() {
 
 		$('.sensors input').click(refresh_graph);
 
-		setInterval(window.refresh_graph, 5 * 60 * 1000);
+		// setInterval(window.refresh_graph, 5 * 60 * 1000);
 	});
 });
