@@ -5,7 +5,7 @@ from terrarium.conf.global_settings import *
 
 VHOST_DIR = os.environ.get('VHOST_DIR', ROOT_DIR)
 
-ALLOWED_HOSTS = [os.environ.get('HOSTNAME', 'localhost')]
+ALLOWED_HOSTS = [os.environ.get('HOSTNAME', 'localhost').split(',')]
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '*' * 10)
 
