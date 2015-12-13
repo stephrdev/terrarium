@@ -124,6 +124,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PARSER_CLASSES': (
         'drf_ujson.parsers.UJSONParser',
+        'rest_framework.parsers.FormParser',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 250,
