@@ -43,15 +43,16 @@
 
 				d3.json(endpoint, function(response) {
 					var groups = d3.nest().key(function(record) {
-						return  record.metric;
-					}).map(response.results, d3.map);
+							return  record.metric;
+						}).map(response.results, d3.map),
+						formatter = d3.time.format.utc('%Y-%m-%dT%H:%M:%S.%L%LZ')
+					;
 
 					groups.forEach(function(key, values) {
-						groups.set(key, MG.convert.date(
-							values,
-							'timestamp',
-							'%Y-%m-%dT%H:%M:%S.%L%LZ'
-						));
+						groups.set(key, values.map(function(record) {
+							record.timestamp = formatter.parse(record.timestamp);
+							return record;
+						}));
 					});
 
 					module.plot(groups.keys(), groups.values());
