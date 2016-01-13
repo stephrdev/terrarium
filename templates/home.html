@@ -2,6 +2,16 @@
 
 
 {% block content %}
-	<div class="sensors"></div>
-	<div class="graph"></div>
+	<div class="pure-g">
+		<div class="pure-u-1-1">
+			<div class="graph" title="Temperatures" data-graph="sensors-aussen,sensors-spot,sensors-oben,sensors-mitte,sensors-unten"></div>
+		</div>
+		<div class="pure-u-1-1 pure-u-md-1-2">
+			<div class="graph" title="Humidity" data-graph="sensors-humidity"></div>
+		</div>
+		<div class="pure-u-1-1 pure-u-md-1-2">
+			<h3>Outlets</h3>
+			<p>Placeholder for outlet controls.</p>
+		</div>
+	</div>
 {% endblock %}

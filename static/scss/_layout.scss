@@ -21,3 +21,28 @@
 		}
 	}
 }
+
+.login {
+	padding-top: 2em;
+	letter-spacing: inherit;
+
+	fieldset > div {
+		text-align: center;
+	}
+}
+
+.pure-g {
+	> div {
+		padding-top: 1em;
+	}
+}
+
+.graph {
+	position: relative;
+
+	button {
+		position: absolute;
+		top: 0.5em;
+		left: 1em;
+	}
+}

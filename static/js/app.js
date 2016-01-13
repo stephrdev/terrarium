@@ -1,23 +1,29 @@
 $(document).ready(function() {
-	var graph = undefined;
-
 	$('.graph').each(function() {
-		graph = $.graph($(this), {metrics: ($(this).data('graph') || '').split(',')});
+		var button = $('<button>').text('Refresh');
+		$(this).append(button);
+		$.graph($(this), {
+			metrics: ($(this).data('graph') || '').split(','),
+			title: $(this).attr('title'),
+			height: Math.min(Math.round($(this).width() * 9 / 16), 600),
+			refresh_interval: 300
+		});
+	});
+
+	window.refresh_graph = function() {
+		graph.refresh($('.sensors input:checked').map(function() { return this.value; }).toArray());
+	}
+
+	$('.sensors button').click(function(e) {
+		e.preventDefault();
+		refresh_graph();
 	});
 
 	$.get('/api/metrics/', function(data) {
 		$.each(data.results, function(i, metric) {
 			$('.sensors').append($('<label>').append($('<input>').attr({
 				type: 'checkbox', value: metric.name, checked: 'checked'
-			})).append(metric.name));
+			})).append(' ' + metric.name));
 		});
-
-		window.refresh_graph = function() {
-			graph.refresh($('.sensors input:checked').map(function() { return this.value; }).toArray());
-		}
-
-		$('.sensors input').click(refresh_graph);
-
-		// setInterval(window.refresh_graph, 5 * 60 * 1000);
 	});
 });
