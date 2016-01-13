@@ -11,10 +11,12 @@
 	<body>
 		<div class="header">
 			<div class="pure-menu pure-menu-horizontal">
-				<ul class="pure-menu-list">
-					<li class="pure-menu-item"><a href="{% url 'home' %}" class="pure-menu-link">Overview</a></li>
-					<li class="pure-menu-item"><a href="{% url 'admin:index' %}" class="pure-menu-link">Admin</a></li>
-				</ul>
+				{% if request.user.is_authenticated %}
+					<ul class="pure-menu-list">
+						<li class="pure-menu-item"><a href="{% url 'home' %}" class="pure-menu-link">Overview</a></li>
+						<li class="pure-menu-item"><a href="{% url 'admin:index' %}" class="pure-menu-link">Admin</a></li>
+					</ul>
+				{% endif %}
 				<span class="pure-menu-heading">Terrarium</span>
 			</div>
 		</div>

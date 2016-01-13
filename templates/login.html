@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+	<div class="pure-g login">
+		<div class="pure-u-md-1-5"></div>
+		<div class="pure-u-1-1 pure-u-md-3-5">
+			<form action="." method="post" class="pure-form">
+				{% csrf_token %}
+				<input type="hidden" name="{{ next_field }}" value="{{ next_value }}" />
+				<fieldset>
+					<legend>Login</legend>
+					{{ form.non_field_errors }}
+					<div>
+						{{ form.username }}
+						{{ form.password }}
+						<button type="submit" class="pure-button pure-button-primary">Sign in</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="pure-u-md-1-5"></div>
+	</div>
+{% endblock %}
