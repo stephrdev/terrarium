@@ -6,6 +6,7 @@ $(document).ready(function() {
 			metrics: ($(this).data('graph') || '').split(','),
 			title: $(this).attr('title'),
 			height: Math.min(Math.round($(this).width() * 9 / 16), 600),
+			refresh_button: button,
 			refresh_interval: 300
 		});
 	});
