@@ -102,6 +102,10 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'didadata',
+    'howl',
+
+    'terrarium.api',
+    'terrarium.watchdog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -146,3 +150,6 @@ LOGGING = {
         'level': 'INFO',
     },
 }
+
+PUSHOVER_TOKEN = ''
+PUSHOVER_RECIPIENT = ''

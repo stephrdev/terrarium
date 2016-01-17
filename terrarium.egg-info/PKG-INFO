@@ -1,0 +1,13 @@
+Metadata-Version: 1.1
+Name: terrarium
+Version: 0.1.0
+Summary: UNKNOWN
+Home-page: https://github.com/stephrev/terrarium
+Author: Stephan Jaekel
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Framework :: Django
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.5
