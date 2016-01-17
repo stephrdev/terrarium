@@ -105,7 +105,7 @@ INSTALLED_APPS = (
     'howl',
 
     'terrarium.api',
-    'terrarium.watchdog',
+    'terrarium.watchdog.apps.WatchdogConfig',
 )
 
 MIDDLEWARE_CLASSES = (
