@@ -4,6 +4,7 @@ from django.views.decorators.cache import never_cache
 
 from .forms import LoginForm
 
+
 class LoginRequiredMixin(object):
 
     @method_decorator(never_cache)
