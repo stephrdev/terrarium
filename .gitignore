@@ -4,6 +4,7 @@
 /terrarium/settings.py
 .cache
 .coverage
+*.egg-info/
 .project
 .pydevproject
 *.pyc
