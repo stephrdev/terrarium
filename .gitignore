@@ -3,6 +3,7 @@
 /htmlcov
 /terrarium/settings.py
 .cache
+.coverage
 .project
 .pydevproject
 *.pyc
