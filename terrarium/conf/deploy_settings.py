@@ -30,3 +30,6 @@ DEFAULT_FROM_EMAIL = SERVER_EMAIL = os.environ.get('EMAIL_SENDER', '{0}@{1}'.for
 ADMINS = [('admin', DEFAULT_FROM_EMAIL)]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+PUSHOVER_TOKEN = os.environ.get('PUSHOVER_TOKEN')
+PUSHOVER_RECIPIENT = os.environ.get('PUSHOVER_RECIPIENT')
