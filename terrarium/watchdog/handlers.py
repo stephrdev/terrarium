@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from howl.models import Alert
 from howl.signals import alert_clear, alert_notify, alert_wait
 
-from terrarium.api.pushover import PushoverApi
+from terrarium.watchdog.pushover import PushoverApi
 
 
 logger = logging.getLogger(__name__)

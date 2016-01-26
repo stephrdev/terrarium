@@ -3,7 +3,7 @@ import pytest
 from requests import RequestException
 from requests.models import Response
 
-from terrarium.api.pushover import PushoverApi, PushoverException
+from terrarium.watchdog.pushover import PushoverApi, PushoverException
 
 
 class TestPushoverApi:
