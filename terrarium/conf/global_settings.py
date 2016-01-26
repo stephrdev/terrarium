@@ -104,7 +104,6 @@ INSTALLED_APPS = (
     'didadata',
     'howl',
 
-    'terrarium.api',
     'terrarium.watchdog.apps.WatchdogConfig',
 )
 
