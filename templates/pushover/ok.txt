@@ -1,5 +1,5 @@
-Meldung von {{ observer.watchdog_set.all.0.metric.name }}
-Beobachter: {{ observer.name }}
+Notification from: {{ observer.watchdog_set.all.0.metric.name }}
+Observer: {{ observer.name }}
 
-IST-Wert: {{ alert.observer.watchdog_set.all.0.last_measurement }}
-SOLL-Wert: {{ alert.observer.operator }} {{ alert.observer.value }}
+Actual value: {{ alert.observer.watchdog_set.all.0.last_measurement }}
+Target value: {{ alert.observer.operator }} {{ alert.observer.value }}

@@ -1,7 +1,6 @@
+Notification from {{ alert.observer.watchdog_set.all.0.metric.name }}
+Time: {{ alert.timestamp|date:"d.m.Y H:i" }}
+Observer: {{ alert.observer.name }}
 
-Meldung von {{ alert.observer.watchdog_set.all.0.metric.name }}
-Zeit: {{ alert.timestamp|date:"d.m.Y H:i" }}
-Beobachter: {{ alert.observer.name }}
-
-IST-Wert: {{ alert.value }}
-SOLL-Wert: {{ alert.observer.operator }} {{ alert.observer.value }}
+Actual value: {{ alert.value }}
+Target value: {{ alert.observer.operator }} {{ alert.observer.value }}
