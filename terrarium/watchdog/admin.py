@@ -5,12 +5,12 @@ from .models import Watchdog
 
 @admin.register(Watchdog)
 class WatchdogAdmin(admin.ModelAdmin):
-    list_display = ('observer', 'metric', 'get_last_measurement', 'get_last_time')
+    list_display = ('observer', 'metric', 'get_last_value', 'get_last_time')
 
-    def get_last_measurement(self, obj):
-        return obj.last_measurement
+    def get_last_value(self, obj):
+        return obj.last_value
 
-    get_last_measurement.short_description = 'Last measurement'
+    get_last_value.short_description = 'Last measurement'
 
     def get_last_time(self, obj):
         return obj.last_time
