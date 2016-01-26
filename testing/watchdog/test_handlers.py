@@ -16,49 +16,42 @@ class TestSignals:
         self.record = RecordFactory.create(value=5, metric=self.metric)
         self.watchdog = WatchdogFactory.create(observer=self.observer, metric=self.metric)
 
-    @mock.patch('terrarium.watchdog.handlers.send_pushover_notification')
-    def test_send_warning(self, pushover_mock):
+    @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
+    def test_send_warning(self, pushover_mock, settings):
         pushover_mock.return_value = None
         title = 'WARNING: {0}'.format(self.observer.name)
 
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False
+        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         alert = Alert.objects.first()
-        assert pushover_mock.assert_called_once_with(title, alert, 'warning') is None
+        assert pushover_mock.assert_called_once_with(
+            settings.PUSHOVER_RECIPIENT, title, alert, 'warning') is None
 
-    @mock.patch('terrarium.watchdog.handlers.send_pushover_notification')
-    def test_send_alert(self, pushover_mock):
+    @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
+    def test_send_alert(self, pushover_mock, settings):
         pushover_mock.return_value = None
         title_warning = 'WARNING: {0}'.format(self.observer.name)
         title_critical = 'CRITICAL: {0}'.format(self.observer.name)
 
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False
+        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         alert = Alert.objects.first()
-        assert pushover_mock.assert_called_with(title_warning, alert, 'warning') is None
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False
+        assert pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title_warning, alert, 'warning') is None
+        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
-        assert pushover_mock.assert_called_with(title_critical, alert, 'critical') is None
+        assert pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title_critical, alert, 'critical') is None
 
-    @mock.patch('terrarium.watchdog.handlers.send_pushover_notification')
-    def test_send_clear(self, pushover_mock):
+    @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
+    def test_send_clear(self, pushover_mock, settings):
         pushover_mock.return_value = None
         title = 'OK: {0}'.format(self.observer.name)
 
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False
+        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         RecordFactory.create(value=4, metric=self.metric)
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is True
-        assert pushover_mock.assert_called_with(title, self.watchdog.observer, 'ok') is None
+        assert self.watchdog.observer.compare(self.watchdog.last_value) is True
+        assert pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title, self.watchdog.observer, 'ok') is None
         assert Alert.objects.all().count() == 0
-
-    @mock.patch('terrarium.watchdog.handlers.logger')
-    def test_pushover_notification_failed(self, mock_logger):
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False
-        assert mock_logger.critical.assert_called_with('application token is invalid') is None
-
-    @mock.patch('requests.models.Response.ok')
-    def test_pushover_notification(self, request_mock):
-        request_mock.return_value = True
-
-        assert self.watchdog.observer.compare(self.watchdog.last_measurement) is False

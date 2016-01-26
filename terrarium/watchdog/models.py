@@ -18,7 +18,7 @@ class Watchdog(models.Model):
         return '{0} - {1}'.format(self.observer, self.metric)
 
     @property
-    def last_measurement(self):
+    def last_value(self):
         if not self.metric.record_set.first():
             return None
 

@@ -1,4 +1,10 @@
+import logging
+
 import requests
+from django.template.loader import render_to_string
+
+
+logger = logging.getLogger(__name__)
 
 
 class PushoverException(Exception):
@@ -20,3 +26,14 @@ class PushoverApi(object):
             return response
         except requests.RequestException as e:
             raise PushoverException(e)
+
+    def send_notification(self, recipient, title, obj, tpl):
+        params = {
+            'message': render_to_string('pushover/{0}.txt'.format(tpl), {'alert': obj}),
+            'title': title,
+            'user': recipient,
+        }
+        response = self.send_message(params)
+
+        if not response.ok:
+            logger.critical(', '.join(response.json()['errors']))

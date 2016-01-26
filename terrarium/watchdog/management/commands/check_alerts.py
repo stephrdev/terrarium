@@ -14,6 +14,6 @@ class Command(BaseCommand):
         logger.debug('>>  Checking alerts...')
 
         for data in Watchdog.objects.all():
-            data.observer.compare(data.last_measurement)
+            data.observer.compare(data.last_value)
 
         logger.debug('>>  All alerts checked!')
