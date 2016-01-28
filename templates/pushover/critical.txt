@@ -1,4 +1,4 @@
-Notification from {{ alert.observer.watchdog_set.all.0.metric.name }}
+Notification from {{ alert.observer.watchdog_set.all.first.metric.name }}
 Time: {{ alert.timestamp|date:"d.m.Y H:i" }}
 Observer: {{ alert.observer.name }}
 
