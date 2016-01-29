@@ -1,6 +1,5 @@
-Notification from {{ alert.observer.watchdog_set.all.first.metric.name }}
+Notification from {{ alert.observer.name }}
 Time: {{ alert.timestamp|date:"d.m.Y H:i" }}
-Observer: {{ alert.observer.name }}
 
-Actual value: {{ alert.value }}
+Actual value: {{ compare_value }}
 Target value: {{ alert.observer.operator }} {{ alert.observer.value }}

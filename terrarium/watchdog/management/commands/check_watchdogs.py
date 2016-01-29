@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        logger.debug('>>  Checking alerts...')
+        logger.debug('>>  Checking watchdogs...')
 
-        for data in Watchdog.objects.all():
-            data.observer.compare(data.last_value)
+        for watchdog in Watchdog.objects.all():
+            watchdog.observer.compare(watchdog.last_value)
 
-        logger.debug('>>  All alerts checked!')
+        logger.debug('>>  All watchdogs checked!')
