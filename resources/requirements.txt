@@ -1,5 +1,5 @@
 Django==1.8.8
-django-howl==0.1.5
+django-howl==0.1.6
 django-pipeline==1.5.4
 jsmin==2.1.6
 drf-ujson==1.2
