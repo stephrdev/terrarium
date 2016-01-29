@@ -29,7 +29,7 @@ class Watchdog(models.Model):
     @property
     def last_time_delta(self):
         td = timezone.now() - self.last_time
-        return td.total_seconds
+        return td.total_seconds()
 
     @property
     def last_value(self):
