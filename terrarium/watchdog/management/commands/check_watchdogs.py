@@ -20,7 +20,9 @@ class Command(BaseCommand):
                 title = 'OUTDATED: {0}'.format(watchdog.metric)
                 api = PushoverApi(settings.PUSHOVER_TOKEN)
                 api.send_notification(
-                    settings.PUSHOVER_RECIPIENT, title, 'outdated', metric=watchdog.metric)
+                    settings.PUSHOVER_RECIPIENT, title, 'outdated',
+                    last_timestamp=watchdog.last_timestamp
+                )
                 continue
 
             compare_value = watchdog.last_value

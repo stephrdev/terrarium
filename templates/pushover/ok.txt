@@ -1,3 +1,1 @@
-Notification from: {{ observer.name }}
-
 Current value: {{ compare_value }}

@@ -1,3 +1,1 @@
-Notification from: {{ metric.name }}
-
-Last updated: {{ metric.last_timestamp }}
+Last updated: {{ last_timestamp }}
