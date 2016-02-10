@@ -1,4 +1,6 @@
+import mock
 import pytest
+import requests
 from django.utils.six import StringIO
 
 from didadata.tests.factories.metrics import MetricFactory, RecordFactory
@@ -9,13 +11,18 @@ from testing.factories.watchdog import WatchdogFactory
 
 @pytest.mark.django_db
 class TestCommand:
+
     def setup(self):
         self.stdout = StringIO()
 
     def teardown(self):
         self.stdout.close()
 
-    def test_handle(self, settings):
+    @mock.patch('terrarium.watchdog.pushover.requests.post')
+    def test_handle(self, request_mock, settings):
+        request_mock.return_value = requests.Response()
+        request_mock.return_value.status_code = 200
+
         settings.DEBUG = True
         metric = MetricFactory.create()
         RecordFactory.create(value=3, metric=metric)
@@ -23,7 +30,11 @@ class TestCommand:
 
         assert Command().execute(stdout=self.stdout) is None
 
-    def test_handle_compare_time(self, settings):
+    @mock.patch('terrarium.watchdog.pushover.requests.post')
+    def test_handle_compare_time(self, request_mock, settings):
+        request_mock.return_value = requests.Response()
+        request_mock.return_value.status_code = 200
+
         settings.DEBUG = True
         metric = MetricFactory.create()
         RecordFactory.create(value=3, metric=metric)

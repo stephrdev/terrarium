@@ -1,7 +1,6 @@
 import mock
 import pytest
-from requests import RequestException
-from requests.models import Response
+import requests
 
 from didadata.tests.factories.metrics import MetricFactory, RecordFactory
 from terrarium.watchdog.pushover import PushoverApi, PushoverException
@@ -20,28 +19,40 @@ class TestPushoverApi:
 
     @mock.patch('requests.post')
     def test_send_message(self, request_mock):
-        request_mock.return_value = Response()
+        request_mock.return_value = requests.Response()
         api = PushoverApi('SECRET_TOKEN')
 
-        assert isinstance(api.send_message({}), Response) is True
+        assert isinstance(api.send_message({}), requests.Response) is True
 
     @mock.patch('requests.post')
     def test_send_message_exception(self, request_mock):
-        request_mock.side_effect = RequestException
+        request_mock.side_effect = requests.RequestException
         api = PushoverApi('SECRET_TOKEN')
 
         with pytest.raises(PushoverException) as exc:
             api.send_message({})
 
-        assert isinstance(exc.value.args[0], RequestException) is True
+        assert isinstance(exc.value.args[0], requests.RequestException) is True
 
     @mock.patch('terrarium.watchdog.pushover.logger')
-    def test_pushover_notification_failed(self, mock_logger):
-        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
+    @mock.patch('requests.post')
+    def test_pushover_notification_failed(self, request_mock, mock_logger):
+        request_mock.return_value = requests.Response()
+        request_mock.return_value.status_code = 400
+        request_mock.return_value._content = bytes(
+            '{"errors": ["application token is invalid"]}', encoding='utf-8')
+
+        with pytest.raises(PushoverException) as exc:
+            assert self.watchdog.observer.compare(self.watchdog.last_value) is False
+
+        assert exc.value.response == request_mock.return_value
+        assert request_mock.called is True
         assert mock_logger.critical.assert_called_with('application token is invalid') is None
 
-    @mock.patch('requests.models.Response.ok')
+    @mock.patch('requests.post')
     def test_pushover_notification(self, request_mock):
-        request_mock.return_value = True
+        request_mock.return_value = requests.Response()
+        request_mock.return_value.status_code = 200
 
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
+        assert request_mock.called is True
