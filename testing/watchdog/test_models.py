@@ -24,10 +24,10 @@ class TestWatchdogModel:
         with freeze_time('2016-01-14 12:00:50'):
             assert obj.last_timestamp_delta == 50
 
-    def test_property_last_value_none(self):
+    def test_property_last_time_delta_none(self):
         obj = WatchdogFactory.create()
 
-        assert obj.last_value is None
+        assert obj.last_timestamp_delta is None
 
     def test_property_last_value(self):
         metric = MetricFactory.create()

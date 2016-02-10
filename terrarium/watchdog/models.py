@@ -6,22 +6,14 @@ from didadata.models import Metric
 
 
 class Watchdog(models.Model):
-    COMPARE_VALUE, COMPARE_TIME = range(0, 2)
-    COMPARE_CHOICES = (
-        (COMPARE_VALUE, 'Compare value'),
-        (COMPARE_TIME, 'Compare time'),
-    )
-
     observer = models.ForeignKey(Observer)
     metric = models.ForeignKey(Metric)
-    compare_type = models.PositiveIntegerField(
-        'Compate type', choices=COMPARE_CHOICES, default=COMPARE_VALUE)
+    max_age = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Watchdog'
         verbose_name_plural = 'Watchdogs'
         ordering = ('metric',)
-        unique_together = ('observer', 'metric')
 
     def __str__(self):
         return '{0} - {1}'.format(self.observer, self.metric)
@@ -38,5 +30,9 @@ class Watchdog(models.Model):
 
     @property
     def last_timestamp_delta(self):
+        last_timestamp = self.last_timestamp
+        if last_timestamp is None:
+            return None
+
         td = timezone.now() - self.last_timestamp
         return td.total_seconds()

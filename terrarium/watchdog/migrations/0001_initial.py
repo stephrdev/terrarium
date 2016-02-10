@@ -15,18 +15,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Watchdog',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('max_age', models.PositiveIntegerField(blank=True, null=True)),
                 ('metric', models.ForeignKey(to='didadata.Metric')),
                 ('observer', models.ForeignKey(to='howl.Observer')),
             ],
             options={
-                'verbose_name_plural': 'Watchdogs',
-                'verbose_name': 'Watchdog',
                 'ordering': ('metric',),
+                'verbose_name': 'Watchdog',
+                'verbose_name_plural': 'Watchdogs',
             },
-        ),
-        migrations.AlterUniqueTogether(
-            name='watchdog',
-            unique_together=set([('observer', 'metric')]),
         ),
     ]
