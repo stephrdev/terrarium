@@ -35,7 +35,7 @@ class TestPushoverApi:
         assert isinstance(exc.value.args[0], requests.RequestException) is True
 
     @mock.patch('terrarium.watchdog.pushover.logger')
-    @mock.patch('requests.post')
+    @mock.patch('terrarium.watchdog.pushover.requests.post')
     def test_pushover_notification_failed(self, request_mock, mock_logger):
         request_mock.return_value = requests.Response()
         request_mock.return_value.status_code = 400
@@ -49,10 +49,24 @@ class TestPushoverApi:
         assert request_mock.called is True
         assert mock_logger.critical.assert_called_with('application token is invalid') is None
 
-    @mock.patch('requests.post')
+    @mock.patch('terrarium.watchdog.pushover.requests.post')
     def test_pushover_notification(self, request_mock):
         request_mock.return_value = requests.Response()
         request_mock.return_value.status_code = 200
 
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         assert request_mock.called is True
+
+    @mock.patch('terrarium.watchdog.pushover.logger')
+    @mock.patch('terrarium.watchdog.pushover.requests.post')
+    def test_pushover_unkown_error(self, request_mock, mock_logger):
+        request_mock.return_value = requests.Response()
+        request_mock.return_value.status_code = 400
+        request_mock.return_value._content = bytes('foobar', encoding='utf-8')
+
+        with pytest.raises(PushoverException) as exc:
+            assert self.watchdog.observer.compare(self.watchdog.last_value) is False
+
+        assert exc.value.response == request_mock.return_value
+        assert request_mock.called is True
+        assert mock_logger.critical.assert_called_with('Unkown error') is None

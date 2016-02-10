@@ -25,12 +25,9 @@ class PushoverApi(object):
         except requests.RequestException as exc:
             raise PushoverException(exc, response=exc.response)
 
-    def send_notification(self, recipient, title, alert, compare_value, template):
+    def send_notification(self, recipient, title, template, **context):
         params = {
-            'message': render_to_string('pushover/{0}.txt'.format(template), {
-                'alert': alert,
-                'compare_value': compare_value,
-            }),
+            'message': render_to_string('pushover/{0}.txt'.format(template), context),
             'title': title,
             'user': recipient,
         }

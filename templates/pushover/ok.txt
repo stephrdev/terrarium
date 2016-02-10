@@ -1,5 +1,3 @@
-Notification from: {{ alert.observer.name }}
-Time: {{ alert.timestamp|date:"d.m.Y H:i" }}
+Notification from: {{ observer.name }}
 
-Actual value: {{ compare_value }}
-Target value: {{ alert.observer.operator }} {{ alert.observer.value }}
+Current value: {{ compare_value }}

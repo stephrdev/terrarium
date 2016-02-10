@@ -24,9 +24,10 @@ class TestSignals:
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         alert = Alert.objects.first()
-        assert pushover_mock.assert_called_once_with(
-            settings.PUSHOVER_RECIPIENT, title, alert, self.watchdog.last_value, 'warning'
-        ) is None
+        pushover_mock.assert_called_once_with(
+            settings.PUSHOVER_RECIPIENT, title, 'warning', alert=alert,
+            observer=self.watchdog.observer, compare_value=self.watchdog.last_value
+        )
 
     @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
     def test_send_alert(self, pushover_mock, settings):
@@ -37,22 +38,16 @@ class TestSignals:
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         alert = Alert.objects.first()
-        assert pushover_mock.assert_called_with(
-            settings.PUSHOVER_RECIPIENT,
-            title_warning,
-            alert,
-            self.watchdog.last_value,
-            'warning'
-        ) is None
+        pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title_warning, 'warning', alert=alert,
+            observer=self.watchdog.observer, compare_value=self.watchdog.last_value,
+        )
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
-        assert pushover_mock.assert_called_with(
-            settings.PUSHOVER_RECIPIENT,
-            title_critical,
-            alert,
-            self.watchdog.last_value,
-            'critical'
-        ) is None
+        pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title_critical, 'critical', alert=alert,
+            observer=self.watchdog.observer, compare_value=self.watchdog.last_value,
+        )
 
     @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
     def test_send_clear(self, pushover_mock, settings):
@@ -63,11 +58,8 @@ class TestSignals:
         Alert.objects.all().count() == 1
         RecordFactory.create(value=4, metric=self.metric)
         assert self.watchdog.observer.compare(self.watchdog.last_value) is True
-        assert pushover_mock.assert_called_with(
-            settings.PUSHOVER_RECIPIENT,
-            title,
-            self.watchdog.observer,
-            self.watchdog.last_value,
-            'ok'
-        ) is None
+        pushover_mock.assert_called_with(
+            settings.PUSHOVER_RECIPIENT, title, 'ok',
+            observer=self.watchdog.observer,
+        )
         assert Alert.objects.all().count() == 0

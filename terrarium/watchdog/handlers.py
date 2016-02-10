@@ -11,7 +11,9 @@ def send_warning(sender, instance, compare_value, **kwargs):
     title = 'WARNING: {0}'.format(instance.observer.name)
     api = PushoverApi(settings.PUSHOVER_TOKEN)
     api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, instance, compare_value, 'warning')
+        settings.PUSHOVER_RECIPIENT, title, 'warning',
+        alert=instance, observer=instance.observer, compare_value=compare_value
+    )
 
 
 @receiver(alert_notify, sender=Alert)
@@ -19,7 +21,9 @@ def send_alert(sender, instance, compare_value, **kwargs):
     title = 'CRITICAL: {0}'.format(instance.observer.name)
     api = PushoverApi(settings.PUSHOVER_TOKEN)
     api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, instance, compare_value, 'critical')
+        settings.PUSHOVER_RECIPIENT, title, 'critical',
+        alert=instance, observer=instance.observer, compare_value=compare_value
+    )
 
 
 @receiver(alert_clear, sender=Alert)
@@ -27,4 +31,6 @@ def send_clear(sender, instance, compare_value, **kwargs):
     title = 'OK: {0}'.format(instance.observer.name)
     api = PushoverApi(settings.PUSHOVER_TOKEN)
     api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, instance.observer, compare_value, 'ok')
+        settings.PUSHOVER_RECIPIENT, title, 'ok',
+        observer=instance.observer
+    )
