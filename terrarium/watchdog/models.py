@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from howl.models import Observer
-
 from didadata.models import Metric
+from howl.models import Observer
 
 
 class Watchdog(models.Model):

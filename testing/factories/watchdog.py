@@ -1,8 +1,8 @@
 import factory
+from didadata.tests.factories.metrics import MetricFactory
 from howl.models import Observer
 from howl.operators import get_operator_types
 
-from didadata.tests.factories.metrics import MetricFactory
 from terrarium.watchdog.models import Watchdog
 
 

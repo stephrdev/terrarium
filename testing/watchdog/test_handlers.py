@@ -26,27 +26,21 @@ class TestSignals:
         alert = Alert.objects.first()
         pushover_mock.assert_called_once_with(
             settings.PUSHOVER_RECIPIENT, title, 'warning', alert=alert,
-            observer=self.watchdog.observer, compare_value=self.watchdog.last_value
+            observer=self.watchdog.observer, value=self.watchdog.last_value
         )
 
     @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
     def test_send_alert(self, pushover_mock, settings):
         pushover_mock.return_value = None
-        title_warning = 'WARNING: {0}'.format(self.observer.name)
+        self.observer.waiting_period = 0
         title_critical = 'CRITICAL: {0}'.format(self.observer.name)
 
         assert self.watchdog.observer.compare(self.watchdog.last_value) is False
-        Alert.objects.all().count() == 1
         alert = Alert.objects.first()
-        pushover_mock.assert_called_with(
-            settings.PUSHOVER_RECIPIENT, title_warning, 'warning', alert=alert,
-            observer=self.watchdog.observer, compare_value=self.watchdog.last_value,
-        )
-        assert self.watchdog.observer.compare(self.watchdog.last_value) is False
         Alert.objects.all().count() == 1
         pushover_mock.assert_called_with(
             settings.PUSHOVER_RECIPIENT, title_critical, 'critical', alert=alert,
-            observer=self.watchdog.observer, compare_value=self.watchdog.last_value,
+            observer=self.watchdog.observer, value=self.watchdog.last_value,
         )
 
     @mock.patch('terrarium.watchdog.pushover.PushoverApi.send_notification')
@@ -58,8 +52,5 @@ class TestSignals:
         Alert.objects.all().count() == 1
         RecordFactory.create(value=4, metric=self.metric)
         assert self.watchdog.observer.compare(self.watchdog.last_value) is True
-        pushover_mock.assert_called_with(
-            settings.PUSHOVER_RECIPIENT, title, 'ok',
-            observer=self.watchdog.observer,
-        )
+        assert pushover_mock.call_args[0] == (settings.PUSHOVER_RECIPIENT, title, 'ok')
         assert Alert.objects.all().count() == 0

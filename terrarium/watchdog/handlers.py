@@ -6,31 +6,27 @@ from howl.signals import alert_clear, alert_notify, alert_wait
 from terrarium.watchdog.pushover import PushoverApi
 
 
-@receiver(alert_wait, sender=Alert)
-def send_warning(sender, instance, compare_value, **kwargs):
-    title = 'WARNING: {0}'.format(instance.observer.name)
+def notify(level, instance, signal=None, **kwargs):
+    if 'observer' in kwargs:
+        title = '{0}: {1}'.format(level.upper(), kwargs['observer'].name)
+    else:
+        title = kwargs.pop('title', instance)
+
     api = PushoverApi(settings.PUSHOVER_TOKEN)
     api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, 'warning',
-        alert=instance, observer=instance.observer, compare_value=compare_value
-    )
+        settings.PUSHOVER_RECIPIENT, title, level, alert=instance, **kwargs)
+
+
+@receiver(alert_wait, sender=Alert)
+def send_warning(sender, instance, **kwargs):
+    notify('warning', instance, **kwargs)
 
 
 @receiver(alert_notify, sender=Alert)
-def send_alert(sender, instance, compare_value, **kwargs):
-    title = 'CRITICAL: {0}'.format(instance.observer.name)
-    api = PushoverApi(settings.PUSHOVER_TOKEN)
-    api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, 'critical',
-        alert=instance, observer=instance.observer, compare_value=compare_value
-    )
+def send_alert(sender, instance, **kwargs):
+    notify('critical', instance, **kwargs)
 
 
 @receiver(alert_clear, sender=Alert)
-def send_clear(sender, instance, compare_value, **kwargs):
-    title = 'OK: {0}'.format(instance.observer.name)
-    api = PushoverApi(settings.PUSHOVER_TOKEN)
-    api.send_notification(
-        settings.PUSHOVER_RECIPIENT, title, 'ok',
-        observer=instance.observer
-    )
+def send_clear(sender, instance, **kwargs):
+    notify('ok', instance, **kwargs)

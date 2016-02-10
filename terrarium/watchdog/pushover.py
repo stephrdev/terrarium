@@ -27,7 +27,7 @@ class PushoverApi(object):
 
     def send_notification(self, recipient, title, template, **context):
         params = {
-            'message': render_to_string('pushover/{0}.txt'.format(template), context),
+            'message': render_to_string('pushover/{0}.txt'.format(template), context).strip(),
             'title': title,
             'user': recipient,
         }
