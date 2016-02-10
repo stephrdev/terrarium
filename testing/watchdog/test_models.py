@@ -22,7 +22,7 @@ class TestWatchdogModel:
         obj = WatchdogFactory.create(metric=metric)
 
         with freeze_time('2016-01-14 12:00:50'):
-            assert obj.last_time_delta == 50
+            assert obj.last_timestamp_delta == 50
 
     def test_property_last_value_none(self):
         obj = WatchdogFactory.create()
@@ -40,7 +40,7 @@ class TestWatchdogModel:
     def test_property_last_time_none(self):
         obj = WatchdogFactory.create()
 
-        assert obj.last_time is None
+        assert obj.last_timestamp is None
 
     def test_property_last_time(self):
         metric = MetricFactory.create()
@@ -48,4 +48,4 @@ class TestWatchdogModel:
         record = RecordFactory.create(value=5, metric=metric)
         obj = WatchdogFactory.create(metric=metric)
 
-        assert obj.last_time == record.timestamp
+        assert obj.last_timestamp == record.timestamp

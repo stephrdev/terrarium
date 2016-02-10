@@ -27,20 +27,16 @@ class Watchdog(models.Model):
         return '{0} - {1}'.format(self.observer, self.metric)
 
     @property
-    def last_time_delta(self):
-        td = timezone.now() - self.last_time
-        return td.total_seconds()
-
-    @property
     def last_value(self):
-        if not self.metric.record_set.first():
-            return None
-
-        return self.metric.record_set.first().value
+        record = self.metric.record_set.first()
+        return record.value if record is not None else None
 
     @property
-    def last_time(self):
-        if not self.metric.record_set.first():
-            return None
+    def last_timestamp(self):
+        record = self.metric.record_set.first()
+        return record.timestamp if record is not None else None
 
-        return self.metric.record_set.first().timestamp
+    @property
+    def last_timestamp_delta(self):
+        td = timezone.now() - self.last_timestamp
+        return td.total_seconds()

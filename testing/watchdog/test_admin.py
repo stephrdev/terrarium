@@ -24,7 +24,7 @@ class TestWatchdogAdmin:
 
         assert self.modeladmin.get_last_value(obj=obj) == 5
 
-    def test_get_last_time(self, rf):
+    def test_get_last_timestamp(self, rf):
         metric = MetricFactory.create()
         record = RecordFactory.create(value=5, metric=metric)
         obj = WatchdogFactory.create(metric=metric)
@@ -33,4 +33,4 @@ class TestWatchdogAdmin:
         request = rf.get('/')
         request.user = user
 
-        assert self.modeladmin.get_last_time(obj=obj) == record.timestamp
+        assert self.modeladmin.get_last_timestamp(obj=obj) == record.timestamp

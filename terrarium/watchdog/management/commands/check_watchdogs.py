@@ -16,7 +16,7 @@ class Command(BaseCommand):
         for watchdog in Watchdog.objects.all():
             compare_value = watchdog.last_value
             if watchdog.compare_type == Watchdog.COMPARE_TIME:
-                compare_value = watchdog.last_time_delta
+                compare_value = watchdog.last_timestamp_delta
 
             watchdog.observer.compare(compare_value)
 
