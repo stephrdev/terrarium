@@ -1,4 +1,4 @@
-Django==1.8.8
+Django==1.8.9
 django-howl==0.1.6
 django-pipeline==1.5.4
 jsmin==2.1.6
