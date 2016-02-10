@@ -5,4 +5,4 @@ class WatchdogConfig(AppConfig):
     name = 'terrarium.watchdog'
 
     def ready(self):
-        import terrarium.watchdog.handlers  # NOQA
+        import terrarium.watchdog.handlers  # noqa
