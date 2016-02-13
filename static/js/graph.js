@@ -30,7 +30,7 @@
 					y_accessor: 'value',
 					x_extended_ticks: true,
 					y_extended_ticks: true,
-					yax_count: module.options.height * 0.05,
+					yax_count: module.options.height * 0.03,
 					area: false,
 					missing_is_hidden: true,
 					min_y_from_data: true,

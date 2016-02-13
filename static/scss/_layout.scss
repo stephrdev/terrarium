@@ -28,6 +28,7 @@
 
 	fieldset > div {
 		text-align: center;
+		padding-bottom: 0.5em;
 	}
 }
 
@@ -44,5 +45,9 @@
 		position: absolute;
 		top: 0.5em;
 		left: 1em;
+	}
+
+	.legend {
+		font-size: 0.8em;
 	}
 }
