@@ -2,8 +2,8 @@ import mock
 import pytest
 import requests
 
-from didadata.tests.factories.metrics import MetricFactory, RecordFactory
 from terrarium.watchdog.pushover import PushoverApi, PushoverException
+from testing.factories.didadata import MetricFactory, RecordFactory
 from testing.factories.howl import ObserverFactory
 from testing.factories.watchdog import WatchdogFactory
 

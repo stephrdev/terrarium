@@ -2,7 +2,7 @@ import mock
 import pytest
 from howl.models import Alert
 
-from didadata.tests.factories.metrics import MetricFactory, RecordFactory
+from testing.factories.didadata import MetricFactory, RecordFactory
 from testing.factories.howl import ObserverFactory
 from testing.factories.watchdog import WatchdogFactory
 

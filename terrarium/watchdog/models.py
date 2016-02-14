@@ -1,6 +1,6 @@
+from didadata.models import Metric
 from django.db import models
 from django.utils import timezone
-from didadata.models import Metric
 from howl.models import Observer
 
 
@@ -13,6 +13,9 @@ class Watchdog(models.Model):
         verbose_name = 'Watchdog'
         verbose_name_plural = 'Watchdogs'
         ordering = ('metric',)
+        permissions = (
+            ('check_watchdog', 'Can check Watchdog'),
+        )
 
     def __str__(self):
         return '{0} - {1}'.format(self.observer, self.metric)

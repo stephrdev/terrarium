@@ -1,9 +1,9 @@
 import pytest
 from django.contrib import admin
 
-from didadata.tests.factories.metrics import MetricFactory, RecordFactory
 from terrarium.watchdog.admin import WatchdogAdmin
 from terrarium.watchdog.models import Watchdog
+from testing.factories.didadata import MetricFactory, RecordFactory
 from testing.factories.users import UserFactory
 from testing.factories.watchdog import WatchdogFactory
 

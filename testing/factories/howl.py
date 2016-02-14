@@ -1,6 +1,5 @@
 import factory
-from factory.fuzzy import FuzzyChoice
-from howl.models import Alert, Observer
+from howl.models import Observer
 from howl.operators import get_operator_types
 
 
@@ -12,11 +11,3 @@ class ObserverFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Observer
-
-
-class AlertFactory(factory.DjangoModelFactory):
-    observer = factory.SubFactory(ObserverFactory)
-    value = FuzzyChoice(range(1, 10))
-
-    class Meta:
-        model = Alert

@@ -3,8 +3,8 @@ import pytest
 import requests
 from django.utils.six import StringIO
 
-from didadata.tests.factories.metrics import MetricFactory, RecordFactory
 from terrarium.watchdog.management.commands.check_watchdogs import Command
+from testing.factories.didadata import MetricFactory, RecordFactory
 from testing.factories.watchdog import WatchdogFactory
 
 
